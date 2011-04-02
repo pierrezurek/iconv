@@ -72,7 +72,7 @@
 #endif
 
 /* Get LIBDIR.  */
-#ifndef LIBDIR
+#if !(defined LIBDIR || ANDROID)
 # include "configmake.h"
 #endif
 
@@ -117,7 +117,7 @@ get_charset_aliases (void)
   cp = charset_aliases;
   if (cp == NULL)
     {
-#if !(defined DARWIN7 || defined VMS || defined WIN32_NATIVE || defined __CYGWIN__)
+#if !(defined DARWIN7 || defined VMS || defined WIN32_NATIVE || defined __CYGWIN__ || defined ANDROID)
       FILE *fp;
       const char *dir;
       const char *base = "charset.alias";
@@ -304,6 +304,10 @@ get_charset_aliases (void)
 	   "CP51950" "\0" "EUC-TW" "\0"
 	   "CP54936" "\0" "GB18030" "\0"
 	   "CP65001" "\0" "UTF-8" "\0";
+# endif
+
+# if defined ANDROID
+      cp = "*" "\0" "UTF-8" "\0";
 # endif
 #endif
 
